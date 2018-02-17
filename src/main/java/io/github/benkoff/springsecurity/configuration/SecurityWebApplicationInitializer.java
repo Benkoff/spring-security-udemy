@@ -1,4 +1,4 @@
-package io.github.benkoff.springsecurity.Configuration;
+package io.github.benkoff.springsecurity.configuration;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
