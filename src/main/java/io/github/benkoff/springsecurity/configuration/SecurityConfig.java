@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}password").roles("USER")
                 .and()
-                .withUser("admin").password("{noop}password").roles("ADMIN");
+                .withUser("admin").password("{noop}password").roles("ADMIN", "USER");
     }
 
     // For user “admin”: Able to access /admin page. Unable to access /user page, redirect to 403 access denied page.
@@ -49,21 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
                 .logout()
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
-//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                    .logoutSuccessUrl("/login?logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
                     .permitAll()
                     .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
-//    //Original version from the course
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity
-//                .authorizeRequests()
-//                .antMatchers("/login").permitAll()
-//                .anyRequest().authenticated().and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .and()
-//                .httpBasic();
-//    }
 }
