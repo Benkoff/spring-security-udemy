@@ -1,6 +1,9 @@
 # <a href = "https://www.udemy.com/how-to-use-spring-security-to-secure-your-java-applications/">Java-Spring-Security-Udemy-2015</a>
 Created by Trevor Page. Last updated 6/2015
 
+*The course is nice but a little bit outdated (last update is more than 2,5 years old) so I've decided to rewrite the main part with Spring 5 and recently released Spring Boot 2.0. Also I replace JSP with Thymeleaf and try to use it with Spring Security 5, which isn't officially supported by last Thymeleaf release yet.
+
+
 Curriculum For This Course  11 Lectures 02:37:49
 
 ### The Introduction 43:38
