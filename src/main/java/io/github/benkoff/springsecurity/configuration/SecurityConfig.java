@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by Ben Novikov on 2018, February, 16
@@ -22,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}password").roles("USER")
                 .and()
-                .withUser("admin").password("password").roles("ADMIN");
+                .withUser("admin").password("{noop}password").roles("ADMIN");
     }
 
     // For user “admin”: Able to access /admin page. Unable to access /user page, redirect to 403 access denied page.
@@ -32,18 +33,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/about").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/", "/index", "/home", "/about").permitAll()
+                    .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                    .antMatchers("/user/**").hasAnyRole("USER")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
+                    .loginPage("/login")
+                    .permitAll()
+                    .and()
                 .logout()
-                .permitAll()
-                .and()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
+                    .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 //    //Original version from the course
@@ -57,7 +62,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 //                .and()
 //                .httpBasic();
 //    }
-// roles admin allow to access /admin/**
-// roles user allow to access /user/**
-// custom 403 access denied handler
 }
