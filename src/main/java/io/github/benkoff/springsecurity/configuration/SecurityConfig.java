@@ -15,8 +15,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
-    @Autowired
+
     private AccessDeniedHandler accessDeniedHandler;
+
+    public SecurityConfig(AccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
 
     @Autowired
     public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {

@@ -1,7 +1,5 @@
 package io.github.benkoff.springsecurity.domain;
 
-import lombok.Data;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +14,7 @@ import java.util.Date;
 public class AbstractDomainObject implements DomainObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
     @Version
     private Integer version;
     private Date dateCreated;
